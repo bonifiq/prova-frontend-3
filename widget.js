@@ -219,8 +219,8 @@
     function handleIframeMessage(event) {
         console.log('Mensagem recebida do iFrame:', event.data);
 
-        // Verificar origem (opcional, para segurança)
-        // if (event.origin !== 'http://localhost:5173') return;
+        // Verificar origem
+        if (event.origin !== 'http://localhost:5173') return;
 
         if (event.data.type === 'CLOSE_WIDGET') {
             closeWidget();
