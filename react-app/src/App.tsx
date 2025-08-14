@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import UserView from './components/UserView'
+import PostsList from './components/PostsList'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App(){
+  const [userId, setUserId] = useState<number | null>(null)
+  const [initReceived, setInitReceived] = useState(false)
+
+  useEffect(() => {
+    try {
+      window.parent.postMessage(JSON.stringify({ type: 'IFRAME_READY' }), '*')
+    } catch (e) {}
+
+    function onMessage(ev: MessageEvent){
+      
+      let data: any = ev.data
+     
+      try { if (typeof data === 'string') data = JSON.parse(data) } catch (e) { return }
+      if (!data || !data.type) return
+
+      if (data.type === 'INIT'){
+        setInitReceived(true)
+        setUserId(typeof data.userId === 'number' ? data.userId : null)
+      }
+    }
+
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+
+  function requestClose(){
+    try { window.parent.postMessage(JSON.stringify({ type: 'CLOSE_WIDGET' }), '*') } catch(e) {}
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="h-full max-w-[320px] min-h-[300px] flex flex-col bg-white">
+      <header className="flex items-center justify-between p-3 bg-violet-700 text-white">
+       <UserView userId={userId} />
+        <button aria-label="Fechar" onClick={requestClose} className="text-2xl leading-none">×</button>
+      </header>
+
+      {!initReceived ? (
+        <div className="p-4">Aguardando dados do host...</div>
+      ) : (
+        <div className="flex-1 overflow-auto">
+        <PostsList userId={userId}/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      )}
+    </div>
   )
 }
-
-export default App
