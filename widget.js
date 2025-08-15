@@ -1,6 +1,8 @@
 import { theme } from "./theme/theme.js";
 
 (function () {
+    const localhost = "http://localhost:5173/";
+
     const button = document.createElement('button');
     button.style.position = 'fixed';
     button.style.bottom = '20px';
@@ -19,7 +21,7 @@ import { theme } from "./theme/theme.js";
     document.body.appendChild(button);
 
     const arrow = document.createElement('img');
-    arrow.src = 'http://localhost:5173/arrow-up.svg';
+    arrow.src = `${localhost}arrow-up.svg`;
     arrow.style.width = '24px';
     arrow.style.height = '24px';
     arrow.style.transition = 'transform 0.3s ease';
@@ -36,14 +38,16 @@ import { theme } from "./theme/theme.js";
     container.style.display = 'none';
     container.style.zIndex = '2';
     container.style.boxShadow = `0 0 10px ${theme.palette.neutral.darkest}`;
+    container.style.borderRadius = '10px';
     document.body.appendChild(container);
 
     const iframe = document.createElement('iframe');
     iframe.id = 'widget-content-iframe'
-    iframe.src = 'http://localhost:5173/';
+    iframe.src = `${localhost}`;
     iframe.style.width = '100%';
     iframe.style.height = '600px';
     iframe.style.border = 'none';
+    iframe.style.borderRadius = "10px";
     iframe.setAttribute('scrolling', 'no');
 
     iframe.onload = () => {
