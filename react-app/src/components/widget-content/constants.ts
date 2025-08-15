@@ -1,6 +1,7 @@
+import type { Error } from "./types/props";
 import type { UserType } from "./types/user";
 
-export const INITIAL_USER_DATA:UserType = {
+export const INITIAL_USER_DATA: UserType = {
     id: 0,
     name: '',
     username: '',
@@ -22,4 +23,9 @@ export const INITIAL_USER_DATA:UserType = {
         catchPhrase: '',
         bs: '',
     }
+}
+
+export const INITIAL_ERROR: Error = {
+    user: '',
+    content: ''
 }
