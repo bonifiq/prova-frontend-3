@@ -87,16 +87,6 @@ export const RowWrapper = styled.div`
   width: 100%;
 `;
 
-export const Title = styled.h4`
-  color: ${({ theme }) => theme.palette.neutral.lightest};
-  margin: 0 0 10px 0;
-`;
-
-export const Message = styled.p`
-  color: ${({ theme }) => theme.palette.primary.lightest};
-  margin: 0;
-`;
-
 export const UserInfoSkeletonWrapper = styled.div`
   width: 70%;
 `;
