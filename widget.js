@@ -7,7 +7,7 @@ import { theme } from "./theme/theme.js";
     button.style.position = 'fixed';
     button.style.bottom = '20px';
     button.style.right = '20px';
-    button.style.zIndex = '2';
+    button.style.zIndex = '1000';
     button.style.width = '60px';
     button.style.height = '60px';
     button.style.borderRadius = '100%';
@@ -36,7 +36,7 @@ import { theme } from "./theme/theme.js";
     container.style.maxWidth = '400px';
     container.style.height = '600px';
     container.style.display = 'none';
-    container.style.zIndex = '2';
+    container.style.zIndex = '1000';
     container.style.boxShadow = `0 0 10px ${theme.palette.neutral.darkest}`;
     container.style.borderRadius = '10px';
     document.body.appendChild(container);
@@ -51,7 +51,6 @@ import { theme } from "./theme/theme.js";
     iframe.setAttribute('scrolling', 'no');
 
     iframe.onload = () => {
-        console.log(window.loggedUserId);
         if (window.loggedUserId) {
             setTimeout(() => {
                 iframe.contentWindow.postMessage(
