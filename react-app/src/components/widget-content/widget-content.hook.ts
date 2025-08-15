@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import type { UserType } from "./types/user";
-import type { ContentType } from "./types/contents";
-import { INITIAL_USER_DATA } from "./constants";
+import type { ContentType } from "./types/content";
+import { INITIAL_ERROR, INITIAL_USER_DATA } from "./constants";
+import type { Error, WidgetContentLayoutProps } from "./types/props";
+import { ErrorKey } from "./types/error-enum";
 
-export const useWidgetHook = () => {
+export const useWidgetHook = ():WidgetContentLayoutProps => {
     const [user, setUser] = useState<UserType>(INITIAL_USER_DATA);
     const [content, setContent] = useState<ContentType[]>([]);
     const [isUserLoading, setIsUserLoading] = useState(true);
     const [isContentLoading, setIsContentLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState<Error>(INITIAL_ERROR);
+
+    const handleClose = () => {
+        window.parent.postMessage({ type: 'WIDGET_CLOSE' }, '*');
+    };
 
     const toggleUserIsLoading = () => {
         setIsUserLoading(!isUserLoading)
@@ -17,9 +24,12 @@ export const useWidgetHook = () => {
         setIsContentLoading(!isContentLoading)
     }
 
-    const handleClose = () => {
-        window.parent.postMessage({ type: 'WIDGET_CLOSE' }, '*');
-    };
+    const handleErrorMessage = (errorKey: string, message: string) => {
+        setErrorMessage(prev => ({
+            ...prev,
+            [errorKey]: message
+        }));
+    }
 
     useEffect(() => {
         const handleUserInfo = (event: MessageEvent) => {
@@ -37,12 +47,12 @@ export const useWidgetHook = () => {
                         if (data && Object.keys(data).length > 0) {
                             setUser(data);
                         } else {
-                            console.warn('Usuário não encontrado.');
+                            handleErrorMessage(ErrorKey.USER, 'Usuário não encontrado.')
                             setUser(INITIAL_USER_DATA);
                         }
                     })
-                    .catch((err) => {
-                        console.error('Erro ao buscar dados do usuário:', err);
+                    .catch(() => {
+                        handleErrorMessage(ErrorKey.USER, `Erro ao buscar dados do usuário: ${userId}`)
                         setUser(INITIAL_USER_DATA);
                     })
                     .finally(toggleUserIsLoading);
@@ -70,12 +80,12 @@ export const useWidgetHook = () => {
                         if (Array.isArray(data) && data.length > 0) {
                             setContent(data);
                         } else {
-                            console.warn('Nenhum conteúdo encontrado para este usuário.');
+                            handleErrorMessage(ErrorKey.CONTENT, 'Nenhum conteúdo encontrado para este usuário.');
                             setContent([]);
                         }
                     })
-                    .catch((err) => {
-                        console.error('Erro ao buscar dados do conteúdo:', err);
+                    .catch(() => {
+                         handleErrorMessage(ErrorKey.CONTENT, 'Erro ao buscar dados do conteúdo:');
                         setContent([]);
                     })
                     .finally(toggleContentIsLoading);
@@ -86,13 +96,12 @@ export const useWidgetHook = () => {
         return () => window.removeEventListener('message', handleContentData);
     }, []);
 
-
-
     return {
         handleClose,
         user,
         content,
         isUserLoading,
-        isContentLoading
+        isContentLoading,
+        error: errorMessage
     }
 }
