@@ -23,4 +23,20 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: auto;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #9c0000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5e0000;
+  border-radius: 100px;
 }

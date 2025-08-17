@@ -1,20 +1,37 @@
 import { LineDivisor } from "../line-divisor/line-divisor.styles";
-import { Container, Text } from "./user-infos.styles";
+import { Container, Text, UserInfoSkeleton } from "./user-infos.styles";
 
-interface UserProperties {
+interface UserInfosProps {
   name?: string;
   email?: string;
+  isLoading: boolean;
 }
 
-function UserInfos({
-  name = "Jean Junior Ros",
-  email = "junior7511@hotmai.com",
-}: UserProperties) {
+function UserInfos({ name, email, isLoading = false }: UserInfosProps) {
+  function renderContent(isLoading: boolean) {
+    if (isLoading) {
+      return (
+        <>
+          <UserInfoSkeleton />
+          <UserInfoSkeleton style={{ margin: "0px 0px 10px 10px" }} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Text>{`Nome: ${name}`}</Text>
+          <Text
+            style={{ margin: "0px 0px 10px 10px" }}
+          >{`E-mail: ${email}`}</Text>
+        </>
+      );
+    }
+  }
+
   return (
     <Container>
-      <Text>{`Nome: ${name}`}</Text>
-      <Text style={{ margin: "0px 0px 10px 10px" }}>{`E-mail: ${email}`}</Text>
-      <LineDivisor />
+      {renderContent(isLoading)}
+      <LineDivisor style={{ marginBottom: 5 }} />
     </Container>
   );
 }
