@@ -1,97 +1,55 @@
-# 🧪 Prova Prática – Desenvolvedor Front-End
+# 💻 React Widget App
 
-## 🧠 Objetivo
+## 🔨 Instalação
 
-Avaliar a capacidade do candidato em desenvolver e integrar um widget em uma página web, consumindo dados de uma API e utilizando tecnologias modernas como React.
+Para instalar a aplicação, siga os passos abaixo na pasta `react-app`:
 
----
+### Com Yarn
 
-## 📋 Instruções Gerais
+```bash
+yarn install
+```
 
-Você deve entregar:
+### Com Node/npm
 
-1. Um arquivo JavaScript que será incluído em qualquer site para carregar um widget contendo um iFrame.
-2. Um projeto React utilizando o framework Vite + TypeScript com a página a ser carregada no widget.
-3. As instruções de como executar e testar a solução.
-
----
-
-## ✅ Requisitos
-
-### 1. JavaScript para inserir o widget (arquivo externo)
-
-Desenvolva um script JS que:
-
-- Cria um botão flutuante fixo no canto inferior direito da tela (como um botão de chat).
-- Ao clicar no botão, um iFrame deve aparecer com o conteúdo da aplicação React.
-- O botão deve permitir abrir/fechar o widget.
-- O script deve ser facilmente incorporado via `<script src="..."></script>` em qualquer site.
-
-> 💡 O `window.loggedUserId` estará definido na página principal com o valor do ID do usuário logado (por exemplo: `window.loggedUserId = 2`).
+```bash
+npm install
+```
 
 ---
 
-### 2. Aplicação React
+## 👨‍💻 Execução da Aplicação React
 
-Você deverá criar uma aplicação que será exibida dentro do iFrame. Essa aplicação deve:
+Ainda na pasta `react-app`, para iniciar a aplicação:
 
-- Ao carregar, ler o valor de `window.parent.loggedUserId` via `postMessage`.
-- Usar esse ID para fazer uma requisição `GET` para:
-  `https://jsonplaceholder.typicode.com/users/<ID>`
-- Exibir na tela os seguintes dados do usuário retornado:
-  - Nome
-  - E-mail
-- Usar o mesmo ID para fazer uma requisição `GET` para:
-  `https://jsonplaceholder.typicode.com/posts?userId=<ID>`
-- Exibir na tela os posts realizados pelo usuário contendo:
-  - Título (`title`)
-  - Conteúdo (`body`)
+### Com Yarn
 
-> ⚠️ Importante: a aplicação React precisa funcionar mesmo rodando em um iFrame hospedado em outro domínio.
+```bash
+yarn dev
+```
 
----
+### Com Node/npm
 
-### 3. Design & UX
+```bash
+npm run dev
+```
 
-- O widget pode ser simples, mas deve ser utilizável em desktop e mobile.
-- O widget deve cobrir no máximo **320px de largura** e **600px de altura**.
-- Sinta-se livre para utilizar bibliotecas com componentes prontos ou de estilização.
-- Deve haver um botão de **fechar** dentro do próprio widget.
+> Observação: a aplicação irá rodar em `localhost` em uma porta específica (normalmente `5173`).
 
 ---
 
-## 🧪 Critérios de Avaliação
+## 🧠 Testando o Widget
 
-| Critério                          | Peso |
-|----------------------------------|------|
-| Funcionalidade completa          | 40%  |
-| Organização do código            | 20%  |
-| Uso adequado de React e JS       | 20%  |
-| UX e comportamento do widget     | 10%  |
-| Clareza nas instruções de uso    | 10%  |
+1. Abra o site de exemplo que deseja utilizar.
+2. Utilize a extensão **Go Live** do VSCode ou abra o HTML manualmente no navegador.
+3. Automaticamente, o widget deverá aparecer no canto inferior direito da página.
 
 ---
 
-## 🚀 Extras (não obrigatórios, mas contam pontos)
+## 🐛 Troubleshooting
 
-- Adicionar tratamento de erro caso o ID do usuário seja inválido.
-- Fazer loading enquanto a API é chamada.
-- Testes unitários
+Caso, ao clicar no widget, o `localhost` não seja acessado:
 
----
-
-## 👾 Exemplos
-
-![Aviato example](imgs/01.gif)
-![Classimax example](imgs/02.gif)
-![Shop example](imgs/03.gif)
-
----
-
-## 📦 Entrega
-
-- Basta fazer um pull-request nesse repositório contendo seu nome completo no título do mesmo.
-
----
-
-Boa sorte! 🍀
+1. Abra o arquivo `widget.js`.
+2. Localize o objeto `IFRAME_CONFIG`.
+3. Altere a porta no campo `url` para a mesma porta exibida ao iniciar a aplicação (passo de execução).
