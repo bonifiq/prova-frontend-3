@@ -92,6 +92,8 @@
   widget.querySelector("svg").style.transition = "all 0.5s ease";
   widget.querySelector("svg").style.transform = "rotate(-180deg)";
 
+  widget.addEventListener("click", clickOnWidget);
+
   //iFrame
   const iFrame = document.createElement("iframe");
   iFrame.id = "iFrame";
@@ -108,11 +110,20 @@
   iFrame.style.width = "320px";
   iFrame.style.height = "600px";
   iFrame.style.zIndex = "10000";
+  iFrame.style.touchAction = "manipulation";
+  iFrame.addEventListener("load", () => {
+    iFrame.contentWindow.postMessage({ loggedUserId }, "*");
+  });
 
-  widget.addEventListener("click", clickOnWidget);
+  window.addEventListener("message", (event) => {
+    if (event.data?.type === "onClickToClose") {
+      clickOnWidget();
+    }
+  });
 
   document.body.appendChild(widget);
   document.body.appendChild(iFrame);
+
   ajustResposiveScreen();
   window.addEventListener("resize", ajustResposiveScreen);
 })();
