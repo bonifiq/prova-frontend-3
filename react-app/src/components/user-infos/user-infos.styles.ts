@@ -18,6 +18,7 @@ export const Text = styled.p`
 export const UserInfoSkeleton = styled(Skeleton).attrs({
   baseColor: COLORS.primaryDark,
   highlightColor: COLORS.primary,
+  "data-testid": "user-info-skeleton",
 })`
   width: 200px;
   max-width: 100%;

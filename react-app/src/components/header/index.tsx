@@ -7,7 +7,7 @@ function Header() {
   };
 
   return (
-    <Container>
+    <Container data-testid="header-container">
       <RowWrapper>
         <Title>BonifiQ - Prova frontend</Title>
         <CloseButton onClick={onClickToClose}>

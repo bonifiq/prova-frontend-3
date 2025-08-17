@@ -7,7 +7,7 @@ export interface UserDataRenderItemProps {
 
 function UserDataRenderItem({ title, body }: UserDataRenderItemProps) {
   return (
-    <Container>
+    <Container data-testid="user-data-list">
       <Title>{title}</Title>
       <Description>{body}</Description>
     </Container>

@@ -13,7 +13,7 @@ function UserData({ userDataList, isLoading }: UserDataProps) {
     if (isLoading) {
       return (
         <>
-          <Container>
+          <Container data-testid="user-data-loading">
             <UserDataSkeleton />
           </Container>
         </>
