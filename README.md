@@ -53,3 +53,7 @@ Caso, ao clicar no widget, o `localhost` não seja acessado:
 1. Abra o arquivo `widget.js`.
 2. Localize o objeto `IFRAME_CONFIG`.
 3. Altere a porta no campo `url` para a mesma porta exibida ao iniciar a aplicação (passo de execução).
+
+## 🖌️ Figma (extra)
+
+Segue o [figma](https://www.figma.com/design/ENpf7vOQrkqQ74Q53XH2Hl/Prova-BonifiQ?node-id=2-2&t=Gzx7AERlXlVqIOPh-1) no qual o projeto foi baseado.
